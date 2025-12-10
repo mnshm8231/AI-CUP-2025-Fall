@@ -19,7 +19,7 @@
 
 - `inference.py` : 
     - 執行testing data的推論
-    
+
     - 需手動更改使用的模型以及輸出檔名路徑，分別執行五次推論以得5fold的推論結果
 
 - `ensemble.py` :
@@ -94,7 +94,7 @@ AICUP2025/
 ## 生成式 AI 工具使用聲明
 - 使用工具：ChatGPT (OpenAI) / Gemini 3 pro
 
-- 使用範圍：輔助 Python 程式碼生成與語法除錯，少部分策略探討,優化、及報告書潤飾，規範檢查
+- 使用範圍：輔助 Python 程式碼生成與語法除錯，少部分策略探討，優化、及報告書潤飾，規範檢查
 
 ## 引用與致謝
 - Ultralytics YOLO   [ultralytics/ultralytics: Ultralytics YOLO ](https://github.com/ultralytics/ultralytics)
