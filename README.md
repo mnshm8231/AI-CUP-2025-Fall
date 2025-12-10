@@ -54,6 +54,9 @@
 - `kfold_result` :
     - 資料夾內提供已推論完畢的五個txt檔案以及其ensemble的結果 (可用於執行ensemble.py 以及 del_seq.py)
 
+- `weights`:
+    - 資料夾內提供訓練完畢且經挑選每fold最佳權重
+
 - `requirement.txt` : 環境安裝清單
 ---
 
@@ -72,6 +75,9 @@ AICUP2025/
 │
 ├── kfold_result/       
 │   ├── ensemble_roi_1.txt
+│   └── ...
+├── weights/       
+│   ├── fold1.pt
 │   └── ...
 ├── inference.py          
 ├── ensemble.py          
