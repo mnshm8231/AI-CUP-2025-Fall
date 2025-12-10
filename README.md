@@ -4,11 +4,34 @@
 ### 隊伍名稱：TEAM_9890
 ---
 
-### 模型訓練Pipeline 圖
+## 模型訓練+推論Pipeline 圖
 - 以下pipeline圖之檔案名稱僅供參考，與實際檔案名稱不相符
 ![alt text](<AICUP2025-Pipeline.drawio (3).png>)
 
 ---
+## 競賽策略簡介
+
+### 1. ROI (region of interest) CROP
+- 透過統計所有的training bounding boxes 之位置與大小並視覺化為熱力圖 :
+
+![alt text](box_heatmap-2.png)
+- 可以發現 Bounding Box 全集中在差不多的位置
+
+- 依此特性，假定test data也遵循此分布，可以經由裁剪圖片除去背景，讓模型專注於辨識瓣膜
+
+### 2. Ensemble
+- 訓練資料僅有50位病患，且測試資料眾多，單一資料切分會造成overfitting
+
+- 在單模型之下對training data切為 5 fold 進行 5次training (cross validation)
+
+- 分別選出5次實驗最具潛力之model (挑選依據:高recall 高mAP50) 做 ensemble
+
+### 3. 後處理
+- 經程式檢查，所有的training label 皆在同序列中，無多重序列或離散的 Bounding Box
+
+- 透過程式偵測推論txt中每位病患Bounding Box最長序列，不在其中的可以無條件剔除
+
+- 舉例 對patient0010的推論結果為 0052 0053 0072 0081~0101 0150 0151 有畫框，則後處理偵測到最長序列長度為 0081~0101 長度為20， 0052 0053 0072 0150 0151 皆視為噪聲無條件刪除
 ---
 ## 檔案結構與檔案說明
 - `train.ipynb` :
