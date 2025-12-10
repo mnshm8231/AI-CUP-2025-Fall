@@ -1,6 +1,7 @@
 # AI CUP 2025秋季賽－電腦斷層心臟肌肉影像分割競賽 II－主動脈瓣物件偵測
-### 本專案參與 2025 AICUP 電腦斷層主動脈瓣物件偵測競賽，最終採用 ROI-based YOLO + K-fold Ensemble + Post Processing 取得的最佳成績。
+### 本專案參與 2025 AICUP 電腦斷層主動脈瓣物件偵測競賽，最終採用 ROI-based YOLO + K-fold Ensemble + Post Processing 取得最佳成績。
 
+### 隊伍名稱：TEAM_9890
 ---
 
 ### 模型訓練Pipeline 圖
@@ -10,4 +11,81 @@
 ---
 
 ## 檔案結構與檔案說明
+- `train.ipynb` :
+    - 負責ROI前處理
+    - KFOLD資料切分與建立
+    - YOLOv12s的模型參數設定與訓練
+
+- `inference.py` : 
+    - 執行testing data的推論
+    - 需手動更改使用的模型以及輸出檔名路徑，分別執行五次推論以得5fold的推論結果
+
+- `ensemble.py` :
+    - 負責將推論的五份txt ensemble為單一txt檔案
+
+- `del_seq.py` :
+    - 後處理程式，透過Training GT的序列特性，清除不在最長序列內的噪聲
+
+- `kfold_result` :
+    - 資料夾內提供已推論完畢的五個txt檔案以及其ensemble的結果 (可用於執行ensemble.py 以及 del_seq.py)
+
+- `requirement.txt` : 環境安裝清單
+---
+
+## 資料準備
+- 需將競賽提供的三份資料解壓縮至專案根目錄
+    - 42_training_image 
+    - 42_testing_image 
+    - 42_training_label
+
+- 示意圖:
+```text
+AICUP2025/
+├── 42_training_image
+├── 42_testing_image 
+├── 42_training_label
+│
+├── kfold_result/       
+│   ├── ensemble_roi_1.txt
+│   └── ...
+├── inference.py          
+├── ensemble.py          
+├── del_seq.py            
+├── yolo12s.pt            
+├── requirement.txt       
+└── README.md
+```
+---
+## 執行流程
+### 1. 訓練YOLO模型
+- 執行 `train.pynb`
+
+- 5fold 資料集會自動切分並建立，5次訓練也會一併執行
+
+- Output : 訓練結果儲存於 `runs/detect_kfold_roi`，當中會有五份資料夾 命名對應相應的fold 如 `runs/detect_kfold_roi/fold1_roi`
+
+### 2. 執行推論
+- 執行`inference.py`
+
+- 需手動更改使用的模型 (eg. `runs/detect_kfold_roi/fold1_roi/weights/best.pt`) 以及輸出檔名(eg. `ensemble_roi_1.txt`)路徑，分別執行五次推論以得5fold的推論結果
+
+- 按照本隊最佳結果之當次實驗，為了發揮ensemble method的優勢與潛力，權重挑選的基準為人工觀察result.csv的結果，選出在mAP50有一定水準之下，recall最高的那個epoch。
+
+### 3. Ensemble 5 fold results
+- 備妥 5份 推論的 txt檔案 (不想重新推論可於 `kfold_result` 資料夾取用)
+
+- 執行 `ensemble.py`
+- Output : 一份ensemble過後的推論txt檔案
+
+### 4. 後處理清除噪聲
+- 備妥3. 產生的最終ensemble檔案 (`kfold_result`中有提供)
+
+- 執行 `del_seq`
+
+- Output: 三份檔案
+    - `final_output.txt` : 用於繳交至系統之最終推論txt檔
+
+    - `removed_output.txt` :用於分析清噪效果，txt存放因為不符序列規定清除掉的Bounding Box
+
+    - `removed_sorted_by_conf.txt` :結果和`removed_output.txt`相同，但依照confidence排序
 
