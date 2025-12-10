@@ -88,4 +88,13 @@ AICUP2025/
     - `removed_output.txt` :用於分析清噪效果，txt存放因為不符序列規定清除掉的Bounding Box
 
     - `removed_sorted_by_conf.txt` :結果和`removed_output.txt`相同，但依照confidence排序
+---
+## 生成式 AI 工具使用聲明
+- 使用工具：ChatGPT (OpenAI) / Gemini 3 pro
+
+- 使用範圍：輔助 Python 程式碼生成與語法除錯，少部分策略探討,優化、及報告書潤飾，規範檢查。
+
+## 引用與致謝
+- Ultralytics YOLO   [ultralytics/ultralytics: Ultralytics YOLO ](https://github.com/ultralytics/ultralytics)
+- YOLO v12   [sunsmarterjie/yolov12: \[NeurIPS 2025\] YOLOv12: Attention-Centric Real-Time Object Detectors](https://github.com/sunsmarterjie/yolov12)
 
