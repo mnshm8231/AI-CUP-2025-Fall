@@ -7,7 +7,7 @@ from ultralytics import YOLO
 # 這裡model選擇可以直接best.pt，但highest private score 採取的策略為 選擇 "mAP50一定水準之下，recall較高的epoch"
 # 該程式一次只跑一次推論，產生多個fold的預測需持續更改 MODEL_PATH 及 OUT_TXT
 
-MODEL_PATH = "runs/detect_kfold_roi/fold1_1024_roi/weights/epoch32.pt"
+MODEL_PATH = "runs/detect_kfold_roi/fold1_roi/weights/epoch32.pt"
 TEST_ROOT = "42_testing_image/testing_image"
 OUT_TXT = "ensmble_roi_1.txt"
 
