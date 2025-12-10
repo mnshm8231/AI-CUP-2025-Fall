@@ -9,7 +9,7 @@
 ![alt text](<AICUP2025-Pipeline.drawio (3).png>)
 
 ---
-
+---
 ## 檔案結構與檔案說明
 - `train.ipynb` :
     - 負責ROI前處理
@@ -73,6 +73,8 @@ AICUP2025/
 
 - 按照本隊最佳結果之當次實驗，為了發揮ensemble method的優勢與潛力，權重挑選的基準為人工觀察result.csv的結果，選出在mAP50有一定水準之下，recall最高的那個epoch。
 
+- Output : 每執行一次輸出一份推論txt檔 
+
 ### 3. Ensemble 5 fold results
 - 備妥 5份 推論的 txt檔案 (不想重新推論可於 `kfold_result` 資料夾取用)
 
@@ -82,20 +84,21 @@ AICUP2025/
 ### 4. 後處理清除噪聲
 - 備妥3. 產生的最終ensemble檔案 (`kfold_result`中有提供)
 
-- 執行 `del_seq`
+- 執行 `del_seq,py`
 
 - Output: 三份檔案
     - `final_output.txt` : 用於繳交至系統之最終推論txt檔
 
-    - `removed_output.txt` :用於分析清噪效果，txt存放因為不符序列規定清除掉的Bounding Box
+    - `removed_output.txt` :用於分析清噪效果，txt存放因為不符序列規定清除掉的Bounding Box，純分析用，與繳交檔案無關
 
-    - `removed_sorted_by_conf.txt` :結果和`removed_output.txt`相同，但依照confidence排序
+    - `removed_sorted_by_conf.txt` :結果和`removed_output.txt`相同，但依照confidence排序，純分析用，與繳交檔案無關
 ---
 ## 生成式 AI 工具使用聲明
 - 使用工具：ChatGPT (OpenAI) / Gemini 3 pro
 
 - 使用範圍：輔助 Python 程式碼生成與語法除錯，少部分策略探討，優化、及報告書潤飾，規範檢查
 
+--- 
 ## 引用與致謝
 - Ultralytics YOLO   [ultralytics/ultralytics: Ultralytics YOLO ](https://github.com/ultralytics/ultralytics)
 - YOLO v12   [sunsmarterjie/yolov12: \[NeurIPS 2025\] YOLOv12: Attention-Centric Real-Time Object Detectors](https://github.com/sunsmarterjie/yolov12)
